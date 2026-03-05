@@ -1,0 +1,33 @@
+services:
+  app:
+    build: .
+    container_name: sportaccess-app
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/sportaccess?createDatabaseIfNotExist=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: admin
+
+  db:
+    image: mysql:8.0
+    container_name: sportaccess-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: sportaccess
+      MYSQL_ROOT_PASSWORD: admin
+    ports:
+      - "3307:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-padmin"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - sportaccess_prod_db:/var/lib/mysql
+
+volumes:
+  sportaccess_prod_db:
