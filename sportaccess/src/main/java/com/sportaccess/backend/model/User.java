@@ -2,7 +2,9 @@ package com.sportaccess.backend.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import java.util.Set;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -12,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Builder
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,8 +28,21 @@ public class User {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @Column(length = 20)
+    private String telefono;
+
     @Enumerated(EnumType.STRING)
-    private Role role;
+    @Column(nullable = false)
+    @Builder.Default
+    private Role role = Role.CLIENT;
+
+    @CreationTimestamp
+    @Column(updatable = false)
+    private LocalDateTime fechaRegistro;
+
+    @Column(nullable = false)
+    @Builder.Default
+    private Boolean activo = true;
 
     public enum Role {
         ADMIN, CLIENT

@@ -1,0 +1,30 @@
+# ── Compilados Maven ──────────────────────────────
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ── IDE ───────────────────────────────────────────
+.idea/
+*.iws
+*.iml
+*.ipr
+.vscode/
+*.classpath
+*.project
+.settings/
+
+# ── Spring Boot ───────────────────────────────────
+spring-shell.log
+*.log
+
+# ── Secretos (NUNCA subir al repositorio) ─────────
+.env
+firebase-service-account.json
+*-service-account.json
+*.key
+*.pem
+
+# ── Sistema operativo ─────────────────────────────
+.DS_Store
+Thumbs.db
